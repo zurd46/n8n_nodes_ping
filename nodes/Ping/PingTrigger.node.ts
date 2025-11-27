@@ -205,7 +205,7 @@ export class PingTrigger implements INodeType {
 		};
 
 		if (includeRawOutput) {
-			(outputData.details as Record<string, unknown>).rawOutput = lastOutput;
+			(outputData.details as IDataObject).rawOutput = lastOutput;
 		}
 
 		// Determine if we should trigger based on mode

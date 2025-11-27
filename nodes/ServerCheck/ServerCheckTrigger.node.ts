@@ -140,11 +140,11 @@ async function executeDnsCheck(domain: string, timeout: number): Promise<CheckRe
 	});
 }
 
-export class PingTrigger implements INodeType {
+export class ServerCheckTrigger implements INodeType {
 	description: INodeTypeDescription = {
 		displayName: 'Server Check Trigger',
-		name: 'pingTrigger',
-		icon: 'file:ping.svg',
+		name: 'serverCheckTrigger',
+		icon: 'file:serverCheck.svg',
 		group: ['trigger'],
 		version: 1,
 		subtitle: '={{$parameter["checkType"]}} - {{$parameter["triggerMode"]}}',

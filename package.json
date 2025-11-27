@@ -38,8 +38,8 @@
   "n8n": {
     "n8nNodesApiVersion": 1,
     "nodes": [
-      "dist/nodes/Ping/Ping.node.js",
-      "dist/nodes/Ping/PingTrigger.node.js"
+      "dist/nodes/ServerCheck/ServerCheck.node.js",
+      "dist/nodes/ServerCheck/ServerCheckTrigger.node.js"
     ],
     "credentials": []
   },

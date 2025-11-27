@@ -223,11 +223,11 @@ async function executeDnsCheck(
 	});
 }
 
-export class Ping implements INodeType {
+export class ServerCheck implements INodeType {
 	description: INodeTypeDescription = {
 		displayName: 'Server Check',
-		name: 'ping',
-		icon: 'file:ping.svg',
+		name: 'serverCheck',
+		icon: 'file:serverCheck.svg',
 		group: ['transform'],
 		version: 1,
 		subtitle: '={{$parameter["checkType"]}} - {{$parameter["host"]}}',

@@ -1,2 +1,2 @@
-export * from './nodes/Ping/Ping.node';
-export * from './nodes/Ping/PingTrigger.node';
+export * from './nodes/ServerCheck/ServerCheck.node';
+export * from './nodes/ServerCheck/ServerCheckTrigger.node';

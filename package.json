@@ -1,6 +1,6 @@
 {
   "name": "@zurdai/n8n-nodes-server-check",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "n8n nodes for server monitoring - check connectivity via HTTP, TCP Port and DNS",
   "keywords": [
     "n8n-community-node-package",

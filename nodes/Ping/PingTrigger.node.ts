@@ -3,6 +3,7 @@ import {
 	INodeExecutionData,
 	INodeType,
 	INodeTypeDescription,
+	IDataObject,
 } from 'n8n-workflow';
 
 import * as ping from 'ping';
@@ -181,7 +182,7 @@ export class PingTrigger implements INodeType {
 		const currentStatus = !isOffline && isAlive;
 
 		// Build output data
-		const outputData: Record<string, unknown> = {
+		const outputData: IDataObject = {
 			host,
 			alive: isAlive,
 			status: currentStatus ? 'online' : 'offline',

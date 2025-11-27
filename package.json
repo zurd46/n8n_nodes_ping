@@ -1,20 +1,23 @@
 {
-  "name": "@zurdai/n8n-nodes-ping",
+  "name": "@zurdai/n8n-nodes-server-check",
   "version": "1.0.0",
-  "description": "n8n nodes for ping operations - check connectivity to IP addresses and domains",
+  "description": "n8n nodes for server monitoring - check connectivity via HTTP, TCP Port and DNS",
   "keywords": [
     "n8n-community-node-package",
     "n8n",
-    "ping",
+    "server-check",
+    "http-check",
+    "tcp-port",
+    "dns",
     "network",
     "monitoring",
-    "connectivity"
+    "connectivity",
+    "uptime"
   ],
   "license": "MIT",
   "homepage": "",
   "author": {
-    "name": "Your Name",
-    "email": "your.email@example.com"
+    "name": "Zurdai"
   },
   "repository": {
     "type": "git",
@@ -47,9 +50,6 @@
     "n8n-workflow": "^1.22.0",
     "prettier": "^3.1.1",
     "typescript": "^5.3.3"
-  },
-  "dependencies": {
-    "ping": "^0.4.4"
   },
   "peerDependencies": {
     "n8n-workflow": "*"

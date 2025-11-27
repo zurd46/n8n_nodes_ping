@@ -1,90 +1,104 @@
-# n8n-nodes-ping
+# n8n-nodes-server-check
 
-This is an n8n community node package that provides ping functionality to check connectivity to IP addresses and domains.
+n8n community node for server monitoring. Check server connectivity via HTTP, TCP Port or DNS - no ICMP ping required (works even when ping is blocked).
 
 ## Features
 
-### Ping Node
-Execute ping operations to check if a host is reachable:
-- Ping IP addresses or domain names
-- Configure timeout and number of ping attempts
-- Get detailed statistics (response time, packet loss, min/max/avg times)
+### Server Check Node
+Execute connectivity checks:
+- **HTTP(S) Check**: Check if a server responds to HTTP/HTTPS requests (works with any status code)
+- **TCP Port Check**: Check if a specific TCP port is open (ideal for VPN servers: 443, 500, 4500, 1194, 51820)
+- **DNS Resolve**: Check if a domain can be resolved via DNS
 
-### Ping Trigger Node
-Trigger workflows based on ping status:
-- **On Status Change**: Trigger when host goes online/offline
+### Server Check Trigger Node
+Trigger workflows based on server status:
+- **On Status Change**: Trigger when server goes online/offline
 - **On Every Poll**: Trigger on every poll interval
-- **Only When Offline**: Trigger only when host is unreachable
-- **Only When Online**: Trigger only when host is reachable
+- **Only When Offline**: Trigger only when server is unreachable
+- **Only When Online**: Trigger only when server is reachable
 - **On High Latency**: Trigger when latency exceeds a threshold
+
+## Why not ICMP Ping?
+
+Most servers and firewalls block ICMP ping. This node uses alternative methods that work in 99% of cases:
+- HTTP requests work if any web service is running
+- TCP port checks work for any open port
+- DNS lookups work if the domain is resolvable
 
 ## Installation
 
 ### Community Nodes (Recommended)
 1. Go to **Settings > Community Nodes**
 2. Select **Install**
-3. Enter `@zurdai/n8n-nodes-ping`
+3. Enter `@zurdai/n8n-nodes-server-check`
 4. Click **Install**
 
 ### Manual Installation
 ```bash
-npm install @zurdai/n8n-nodes-ping
+npm install @zurdai/n8n-nodes-server-check
 ```
 
-## Usage
+## Usage Examples
 
-### Ping Node
-1. Add the **Ping** node to your workflow
-2. Enter the host (IP or domain) to ping
-3. Configure options:
-   - **Timeout**: How long to wait for response (default: 10s)
-   - **Number of Pings**: How many ping requests to send (default: 1)
-   - **Include Detailed Output**: Include statistics in output
+### HTTP Check
+Check if a web server is responding:
+- URL: `https://example.com`
+- Method: GET
+- Accept Any Status: true (200, 301, 401, 500 all count as "reachable")
 
-### Ping Trigger Node
-1. Add the **Ping Trigger** node as your workflow trigger
-2. Enter the host to monitor
-3. Select the trigger mode
-4. Configure the poll interval in workflow settings
-5. Set additional options as needed
+### TCP Port Check (VPN Server)
+Check if a WireGuard VPN server is reachable:
+- Host: `vpn.example.com`
+- Port: `51820`
 
-## Output Example
+### DNS Check
+Check if a domain is resolvable:
+- Domain: `example.com`
 
-### Ping Node Output
+## Output Examples
+
+### HTTP Check Output
 ```json
 {
-  "host": "google.com",
-  "alive": true,
-  "status": "reachable",
-  "responseTime": "14.5 ms",
-  "packetLoss": "0.0%",
-  "timestamp": "2024-01-15T10:30:00.000Z",
-  "details": {
-    "numericHost": "142.250.185.46",
-    "pingsAttempted": 3,
-    "pingsSuccessful": 3,
-    "pingsFailed": 0,
-    "averageTime": "14.50 ms",
-    "minTime": "12.30 ms",
-    "maxTime": "16.70 ms"
-  }
+  "checkType": "http",
+  "url": "https://example.com",
+  "method": "GET",
+  "reachable": true,
+  "status": "online",
+  "statusCode": 200,
+  "statusMessage": "OK",
+  "responseTimeMs": 145,
+  "responseTime": "145 ms",
+  "timestamp": "2024-01-15T10:30:00.000Z"
 }
 ```
 
-### Ping Trigger Output
+### TCP Port Check Output
 ```json
 {
-  "host": "example.com",
-  "alive": true,
+  "checkType": "tcp",
+  "host": "vpn.example.com",
+  "port": 51820,
+  "reachable": true,
   "status": "online",
-  "responseTime": "25.30 ms",
-  "responseTimeMs": 25.3,
-  "packetLoss": "0.0%",
-  "packetLossPercent": 0,
-  "timestamp": "2024-01-15T10:30:00.000Z",
-  "triggerReason": "Host came online",
-  "previousStatus": "offline",
-  "newStatus": "online"
+  "responseTimeMs": 23,
+  "responseTime": "23 ms",
+  "timestamp": "2024-01-15T10:30:00.000Z"
+}
+```
+
+### DNS Check Output
+```json
+{
+  "checkType": "dns",
+  "domain": "example.com",
+  "reachable": true,
+  "status": "online",
+  "resolvedIp": "93.184.216.34",
+  "ipFamily": "IPv4",
+  "responseTimeMs": 12,
+  "responseTime": "12 ms",
+  "timestamp": "2024-01-15T10:30:00.000Z"
 }
 ```
 
